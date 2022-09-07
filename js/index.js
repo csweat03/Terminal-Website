@@ -1,5 +1,5 @@
 let doc = document;
-var root = "chr15714.com"
+var root = "csweat03.com"
 
 let primary_color = "rgb(0, 146, 19)";
 let second_color = "rgb(186, 245, 194)";
@@ -26,7 +26,7 @@ class TextAdapter {
     }
 
     post() {
-        var post = get_element_constrain_container("current", "output").innerHTML = this.prefix + this.current_output.replace("<br>", "<br>:&nbsp");
+        var post = get_element_constrain_container("current", "output").innerHTML = this.prefix + this.current_output;
         this.current_output = ""
         return post;
     }
@@ -48,48 +48,56 @@ var CMD_LIST = [
         NAME: "help", 
         ALIAS: ["hlp", "?"], 
         PERMISSION: USR_LIST.guest, 
-        ESCRIPTION: "help: Get information on all commands and how to use them.", 
-        EVENT: (args) => {
-            str = ""
-            CMD_LIST.forEach((cmd, ind) => str += `${cmd.NAME}` + (ind == CMD_LIST.length - 1 ? `` : `, `))
-            text_adapter.append("Available Commands:<br>" + str, true)
-            return true;
-        }
+        DESCRIPTION: "Get a list of all qualified commands.", 
+		EVENT: (args) => display_help(args)
     },
     whois = {
         NAME: "whois", 
         ALIAS: ["me", "whoami", "about", "author"], 
         PERMISSION: USR_LIST.guest, 
-        DESCRIPTION: "whois: A small segment about me!", 
+        DESCRIPTION: "A small segment about me.", 
         EVENT: (args) => {
             text_adapter.append("", true);
-            return true;
+            return;
         }
     },
     traditional = {
         NAME: "traditional", 
         ALIAS: ["trad", "leave", "simple", "exit"], 
         PERMISSION: USR_LIST.guest, 
-        DESCRIPTION: "traditional: A command to exit terminal, and view a more traditional website.", 
+        DESCRIPTION: "(WIP) Exit the terminal, and view a more traditional website.", 
         EVENT: (args) => {
-            text_adapter.append("", true)
-            return true;
+            text_adapter.append("&#x1F6AB&#x1F6A7&#x1F6AB Under Construction &#x1F6AB&#x1F6A7&#x1F6AB)", true)
+            return;
         }
     },
     scale = {
         NAME: "scale", 
         ALIAS: ["zoom", "translate", "size"], 
         PERMISSION: USR_LIST.guest, 
-        DESCRIPTION: "scale: A command to change the scale of the terminal, effectively the font size.", 
+        DESCRIPTION: "Change the scale of the terminal.", 
         EVENT: (args) => scale_emulator(args)
     },
     debug = {
         NAME: "debug",
         ALIAS: ["dbg", "verbose", "test"],
         PERMISSION: USR_LIST.guest,
-        DESCRIPTION: "debug: A command to print out a verbose output in the console.",
+        DESCRIPTION: "Print verbose output in the console.",
         EVENT: (args) => toggle_debug(args)
-    }
+    },
+	clear = {
+		NAME: "clear",
+		ALIAS: ["clr", "cls", "delete", "erase"],
+		PERMISSION: USR_LIST.guest,
+		DESCRIPTION: "Clears the screen.",
+		EVENT: (args) => {
+			const packed = document.querySelectorAll('.packed');
+			packed.forEach(pack => {
+			  pack.remove();
+			});
+			document.getElementById("current").remove;
+		}
+	}
 ];
 
 var user = USR_LIST.guest;
@@ -154,8 +162,12 @@ function process_interface() {
         }
 
         event(args)
-
-        pack_div()
+		
+		if (name == "clear") {
+			input_element.value = "";
+		} else {
+			pack_div()
+		}
         return;
     }
 
@@ -169,7 +181,7 @@ function pack_div() {
     text_adapter.post();
     const finalize = div.cloneNode(true);
 
-    finalize.id = "";
+    finalize.removeAttribute("id");
     finalize.className = "packed";
     div.className = "loading"
 
@@ -185,6 +197,17 @@ function pack_div() {
     input_element.value = "";
 }
 
+function display_help(args) {
+	str = "";
+	if (args[0] == "verbose") {
+		CMD_LIST.forEach((cmd, ind) => str += `${cmd.NAME}: ${cmd.DESCRIPTION}` + (ind == CMD_LIST.length - 1 ? `` : `<br>`))
+	} else {
+		CMD_LIST.forEach((cmd, ind) => str += `${cmd.NAME}` + (ind == CMD_LIST.length - 1 ? `<br>-> Try "help verbose" for more information.` : `, `))
+	}
+	text_adapter.append("Available Commands:<br>" + str, true)
+}
+
+// This breaks things. TODO: Fix element scaling problems.
 function scale_emulator(args) {
     if (args.length < 1) {
         text_adapter.append(`This command requires one argument. This value needs to be a number between 0.2 and 5.0!`);
