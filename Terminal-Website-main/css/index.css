@@ -1,0 +1,78 @@
+* {
+    transition: 0.5s;
+}
+
+#shell {
+    background-color: #111111;
+    position: relative;
+    margin: 12px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px -2px rgb(0, 146, 19);
+    height: 97.5%;
+    overflow-y: hidden;
+    color: whitesmoke;
+    letter-spacing: 0.5px;
+    word-spacing: -2px;
+    font-family: CascadiaCode,monospace;
+    font-weight: 1000;
+    font-size: 16px;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+#container {
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+#emulator {
+    height: 42.5%;
+    padding: 15px 10px;
+    margin: 0px 10px;
+}
+
+.loading {
+    animation: slide 0.1s forwards;
+}
+
+#current {
+}
+
+.pointer, .input, .input:focus {
+    display: inline-block;
+    background-color: #111111;
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+    outline: none;
+    border: 0;
+    margin: 0px;
+}
+
+.input, .input:focus {
+    display: inline-block;
+    width: 80%;
+}
+
+.output {
+    margin: 0px 0px 10px 0px;
+}
+
+@keyframes slide {
+    0% {
+        transform: translateY(-100%);
+        opacity: 0%;
+    }
+    70% {
+        opacity: 100%;
+    }
+    100% {
+        transform: translateY(0%);
+    }
+}
