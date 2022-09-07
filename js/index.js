@@ -56,7 +56,7 @@ var CMD_LIST = [
         ALIAS: ["me", "whoami", "about", "author"], 
         PERMISSION: USR_LIST.guest, 
         DESCRIPTION: "A small segment about me.", 
-        EVENT: (args) => text_adapter.append("&#x1F6AB&#x1F6A7&#x1F6AB Under Construction &#x1F6AB&#x1F6A7&#x1F6AB", true)
+        EVENT: (args) => text_adapter.append("Hi &#x1F44B, I'm Christian<br>A passionate full-stack developer from the United States.<br>", true)
     },
     traditional = {
         NAME: "traditional", 
