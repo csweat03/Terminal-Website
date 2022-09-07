@@ -56,20 +56,14 @@ var CMD_LIST = [
         ALIAS: ["me", "whoami", "about", "author"], 
         PERMISSION: USR_LIST.guest, 
         DESCRIPTION: "A small segment about me.", 
-        EVENT: (args) => {
-            text_adapter.append("", true);
-            return;
-        }
+        EVENT: (args) => text_adapter.append("&#x1F6AB&#x1F6A7&#x1F6AB Under Construction &#x1F6AB&#x1F6A7&#x1F6AB", true)
     },
     traditional = {
         NAME: "traditional", 
         ALIAS: ["trad", "leave", "simple", "exit"], 
         PERMISSION: USR_LIST.guest, 
         DESCRIPTION: "(WIP) Exit the terminal, and view a more traditional website.", 
-        EVENT: (args) => {
-            text_adapter.append("&#x1F6AB&#x1F6A7&#x1F6AB Under Construction &#x1F6AB&#x1F6A7&#x1F6AB)", true)
-            return;
-        }
+        EVENT: (args) => text_adapter.append("&#x1F6AB&#x1F6A7&#x1F6AB Under Construction &#x1F6AB&#x1F6A7&#x1F6AB", true)
     },
     scale = {
         NAME: "scale", 
