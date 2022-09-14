@@ -8,18 +8,22 @@ var hist = []
 
 var input_element
 
+var repositories = []
+fetch("https://api.github.com/users/csweat03/repos")
+      .then((response) => response.text())
+      .then((text) => eval(text))
+      .then((response) => {
+        for (const index in response) {
+            const repository = response[index]
+            repositories.push(repository.name)
+        }
+      })
+
 class TextAdapter {
     prefix = ": "
-    current_output = ""
 
-    append(string, overwrite) {
-        return this.current_output = (overwrite ? string : this.current_output + string)
-    }
-
-    post() {
-        var post = get_element_constrain_container("current", "output").innerHTML = this.prefix + this.current_output
-        this.current_output = ""
-        return post
+    async send(string) {
+        get_element_constrain_container("current", "output").innerHTML = this.prefix + string
     }
 }
 
@@ -76,11 +80,7 @@ class Command {
         if (command !== this.name && !found) return false
 
         // Check for sufficient permission
-        if (!user.validate(this.permission)) {
-            text_adapter.append("You do not have sufficient permission to use this command.")
-            text_adapter.post()
-            return false
-        }
+        if (!user.validate(this.permission)) return text_adapter.send("You do not have sufficient permission to use this command.").then(false)
 
         this.event(args)
 		
@@ -99,8 +99,8 @@ const CommandList = {
     theme: new Command("theme", ["change"], UserList.guest, "Change the theme to gui.",                             event_theme),
     scale: new Command("scale", ["zoom"], UserList.guest, "Change the scale of the terminal.",                      event_scale),
     clear: new Command("clear", ["clr", "cls"], UserList.guest, "Clears the screen.",                               event_clear),
-    resume: new Command("resume", ["cv", "recruit"], UserList.guest, "Downloads my latest résumé.",                 event_resume),
-    github: new Command("github", ["git", "source"], UserList.guest, "Navigates to my github page.",                event_github)
+    resume: new Command("resume", ["cv", "recruit"], UserList.guest, "Downloads my latest resume.",                 event_resume),
+    github: new Command("github", ["git", "source"], UserList.guest, "Use 'github ?' for more information.",        event_github)
 }
 
 function event_help(args) {
@@ -110,42 +110,60 @@ function event_help(args) {
         str += `${cmd.name}` + ((args[0] == "verbose") ? (`: ${cmd.description}` + (ind == list.length - 1 ? `` : `<br>`)) : 
                         (ind == list.length - 1 ? `<br>-> Try "help verbose" for more information.` : `, `))
     })
-	text_adapter.append("Available Commands:<br>" + str, true)
+	text_adapter.send("Available Commands:<br>" + str)
 }
 function event_whois() {
-    text_adapter.append("Hi &#x1F44B, I'm Christian<br>A passionate full-stack developer from the United States.<br>", true)
+    text_adapter.send("Hi &#x1F44B, I'm Christian<br>A passionate full-stack developer from the United States.<br>")
 }
 function event_theme() {
-    text_adapter.append("&#x1F6AB&#x1F6A7&#x1F6AB Under Construction &#x1F6AB&#x1F6A7&#x1F6AB", true)
+    text_adapter.send("&#x1F6AB&#x1F6A7&#x1F6AB Under Construction &#x1F6AB&#x1F6A7&#x1F6AB")
 }
 function event_scale(args) {
-    if (args.length < 1) {
-        text_adapter.append(`This command requires one argument. This value needs to be a number between 0.2 and 5.0!`)
-        return
-    }
-    if (!is_numeric(args[0])) {
-        text_adapter.append(`The scale of the emulator cannot be set to ${args[0]}. This value needs to be a number between 0.2 and 5.0!`)
-        return
-    }
+    // Checking that one argument is always present.
+    if (args.length < 1) return text_adapter.send(`This command requires one argument. This value needs to be a number between 0.2 and 5.0!`)
+
+    flagStr = `The scale of the emulator cannot be set to ${args[0]}. This value needs to be a number between 0.2 and 5.0!`
+
+    // Checking that the first argument is a number.
+    if (!is_numeric(args[0])) return text_adapter.send(flagStr)
+
+    // Casting the first argument to a float and constraining the value to 0.2 - 5.0
     n = parseFloat(args[0])
-    if (n < 0.2 || n > 5) {
-        text_adapter.append(`The scale of the emulator cannot be set to ${args[0]}. This value needs to be between 0.2 and 5.0!`)
-        return
-    }
+    if (n < 0.2 || n > 5) return text_adapter.send(flagStr)
+
     document.getElementById("emulator").style = `transform-origin: top left; zoom: ${n.toString()}; -moz-transform: scale(${n.toString()});`
-    text_adapter.append(`The scale of the emulator has been set to ${n}.`)
     document.getElementById('current').scrollIntoView({ behavior: 'smooth' })
+
+    text_adapter.send(`The scale of the emulator has been set to ${n}.`)
 }
 function event_clear() {
     document.querySelectorAll('.packed').forEach(pack => pack.remove());
     document.getElementById("current").remove;
 }
 function event_resume() {
-    text_adapter.append(`Downloading the most recent resume...`)
-    download_file_silently('assets/resume.docx')
+    text_adapter.send(`Downloading the most recent resume...`).then(download_file_silently('assets/resume.docx'))
 }
-function event_github() {
-    text_adapter.append("&#x1F6AB&#x1F6A7&#x1F6AB Under Construction &#x1F6AB&#x1F6A7&#x1F6AB", true)
+function event_github(args) {
+    if (args.length < 1) {
+        return text_adapter.send("Opening my github profile...").then(navigate_link("https://github.com/csweat03/"))
+    }
+
+    if (args[0] == "?") {
+        var str = ""
+        for (var index in repositories) {
+            repo = repositories[index]
+            str += repo + (index == repositories.length - 1 ? `` : `, `)
+        }
+        text_adapter.send("Additional GitHub Commands.<br>github: Go to my github profile.<br>github {repository}: Go to any of the github repositories below.<br><br>" + str)
+    }
+
+    for (var index in repositories) {
+        repo = repositories[index]
+        if (args[0].toLowerCase() == repo.toLowerCase()) {
+            navigate_link("https://github.com/csweat03/" + repo)
+            return
+        }
+    }
 }
 
 function present_interface() {
@@ -176,13 +194,11 @@ function process_interface() {
 
     if (found) return;
 
-    text_adapter.append("Try 'help' instead!", false)
-    pack_div()
+    text_adapter.send("Try 'help' instead!").then(pack_div())
 }
 
 function pack_div() {
     const div = document.getElementById('current')
-    text_adapter.post()
     const finalize = div.cloneNode(true)
 
     finalize.removeAttribute("id")
@@ -191,7 +207,7 @@ function pack_div() {
 
     finalize.childNodes.forEach((children) => children.nodeType == 1 ? children.setAttribute("readonly", "readonly") & (children.id = "") : null)
 
-    setTimeout(() => (div.className = ""), 125)
+    setTimeout(() => (div.className = ""), 250)
         
     document.getElementById("emulator").insertBefore(finalize, div)
 

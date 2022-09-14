@@ -21,3 +21,11 @@ var download_file_silently = function(file_path) {
     a.click();
     document.body.removeChild(a);
 }
+
+var navigate_link = function(file_path) {
+    var a = document.createElement('A');
+    a.href = file_path;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+}

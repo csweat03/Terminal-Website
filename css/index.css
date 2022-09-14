@@ -29,6 +29,7 @@
     width: 100%;
     overflow-x: hidden;
     overflow-y: scroll;
+    display: inline-block;
 }
 
 #emulator {
@@ -38,10 +39,7 @@
 }
 
 .loading {
-    animation: slide 0.1s forwards;
-}
-
-#current {
+    animation: slide 0.5s forwards;
 }
 
 .pointer, .input, .input:focus {
