@@ -17,10 +17,30 @@ Contributions are always welcome!
 
 ## Roadmap
 
-- Add more commands
 - Clean up existing code
-- Develop 'traditional' view, for my Portfolio.
-- Fix glitchy byproducts of 'scale' command.
+- Add download {file} command
+- Add resume shorthand.
+- Add cv shorthand.
+- Add github command.
+- Add github {X} command.
+- Implement elevation system.
+- Add user ? command.
+- Add user create command.
+- Add user login command.
+- Add user create {USER} {PASS}
+- Add user login {USER} {PASS}
+- Add user promote
+- Add user promote {USER}
+[Requires previous commands and elevation system]
+- Add note write command. Return ID
+- Add note read {ID} command.
+- Add note read all command.
+- Add note erase {ID} command.
+- Add note erase all command.
+- Add upload command.
+[Should have all commands good to go before making GUI]
+- Develop theme 'GUI'.
+- Fix 'scale' command.
 
 ## Acknowledgements
 
