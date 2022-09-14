@@ -15,11 +15,12 @@ This project is hosted through GitHub Pages at https://csweat03.github.io/Termin
 Contributions are always welcome!
 
 
-## Roadmap 
+## Other Links 
 
-[Jira Link](https://terminal-website.atlassian.net)
+[Jira](https://terminal-website.atlassian.net) (Please request access)
 
-## Legacy Roadmap (Updated Less Frequently)
+
+## Roadmap
 
 [In Progress]
 
