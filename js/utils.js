@@ -29,3 +29,13 @@ var navigate_link = function(file_path) {
     a.click();
     document.body.removeChild(a);
 }
+
+var validate_args = function(text_adapter = new TextAdapter(), argument_list = [], args = []) {
+    // Getting the difference between the wanted argument list and the received argument list.
+    // Aborting command usage if this difference is greater that 0.
+    // Sends a message to user saying how many commands they are missing.
+    const argument_delta = args.length - argument_list.length;
+    if (argument_delta > 0) return text_adapter.send(`This command requires ${argument_delta} more argument(s).`)
+
+    return args;
+}
