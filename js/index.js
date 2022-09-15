@@ -84,21 +84,21 @@ function event_theme() {
     text_adapter.send("&#x1F6AB&#x1F6A7&#x1F6AB Under Construction &#x1F6AB&#x1F6A7&#x1F6AB")
 }
 function event_scale(args) {
-    const argOne = validate_args(text_adapter, args, ["0"])[0];
+    if (args.length < 1) return;
 
     flagStr = `The scale of the emulator cannot be set to ${args[0]}. This value needs to be a number between 0.2 and 5.0!`
 
     // Checking that the first argument is a number.
-    if (!is_numeric(argOne)) return text_adapter.send(flagStr)
+    if (!is_numeric(args[0])) return text_adapter.send(flagStr)
 
     // Casting the first argument to a float and constraining the value to 0.2 - 5.0
-    cast = parseFloat(argOne)
+    cast = parseFloat(args[0])
     if (cast < 0.2 || cast > 5) return text_adapter.send(flagStr)
 
     document.getElementById("emulator").style = `transform-origin: top left; zoom: ${cast.toString()}; -moz-transform: scale(${cast.toString()});`
     document.getElementById('current').scrollIntoView({ behavior: 'smooth' })
 
-    text_adapter.send(`The scale of the emulator has been set to ${n}.`)
+    text_adapter.send(`The scale of the emulator has been set to ${cast}.`)
 }
 function event_download(args) {
     if (args.length < 1) return;
