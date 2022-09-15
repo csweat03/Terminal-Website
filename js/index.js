@@ -100,7 +100,7 @@ const CommandList = {
     scale: new Command("scale", ["zoom"], UserList.guest, "Change the scale of the terminal.",                      event_scale),
     download: new Command("download", ["dl"], UserList.guest, "Download a file from the website.",                  event_download),
     clear: new Command("clear", ["clr", "cls"], UserList.guest, "Clears the screen.",                               event_clear),
-    resume: new Command("resume", ["cv", "recruit"], UserList.guest, "Downloads my latest resume.",                 event_resume),
+    resume: new Command("resume", ["cv", "recruit"], UserList.guest, "Downloads my latest resume and CV.",          event_resume),
     github: new Command("github", ["git", "source"], UserList.guest, "Use 'github ?' for more information.",        event_github)
 }
 
@@ -137,14 +137,18 @@ function event_scale(args) {
     text_adapter.send(`The scale of the emulator has been set to ${n}.`)
 }
 function event_download(args) {
-    text_adapter.send(`Downloading the most recent resume...`).then(download_file_silently('assets/resume.docx'))
+    const argOne = validate_args(text_adapter, args, ["0"])[0];
+    
+    return text_adapter.send(`Downloading file: ${argOne}.`).then(download_file_silently(`assets/${argOne}`))
 }
 function event_clear() {
     document.querySelectorAll('.packed').forEach(pack => pack.remove());
     document.getElementById("current").remove;
 }
 function event_resume() {
-    text_adapter.send(`Downloading the most recent resume...`).then(download_file_silently('assets/resume.docx'))
+    text_adapter.send(`Downloading resume.docx and cv.docx.`)
+    .then(download_file_silently(`assets/resume.docx`))
+    .then(download_file_silently(`assets/cv.docx`))
 }
 function event_github(args) {
     if (args.length < 1) return text_adapter.send("Opening my github profile...").then(navigate_link("https://github.com/csweat03/"))
@@ -157,7 +161,7 @@ function event_github(args) {
             repo = repositories[index]
             str += repo + (index == repositories.length - 1 ? `` : `, `)
         }
-        text_adapter.send("Additional GitHub Commands.<br>github: Go to my github profile.<br>github {repository}: Go to any of the github repositories below.<br><br>" + str)
+        text_adapter.send("GitHub Commands.<br>github: Go to my github profile.<br>github {repository}: Go to any of the github repositories below.<br><br>" + str)
     }
 
     for (var index in repositories) {
