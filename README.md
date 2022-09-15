@@ -1,6 +1,7 @@
 # Terminal Website
 
-A fun website made to emulate a Linux/Bash Terminal. The project is still actively in development. 
+A static website to emulate a Linux/Bash Terminal. The project is still actively in development. Planning on  
+rewrite using Node.JS
 
 This project is hosted through GitHub Pages at https://csweat03.github.io/Terminal-Website/.
 
