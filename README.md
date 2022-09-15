@@ -22,35 +22,6 @@ Contributions are always welcome!
 
 ## Roadmap
 
-[In Progress]
-
-- Clean up existing code
-- Add download {file} command
-- Add resume shorthand.
-- Add cv shorthand.
-- Add github command.
-- Add github {X} command.
-
-[Starting Soon]
-
-- Implement elevation system.
-- Add user ? command.
-- Add user create command.
-- Add user login command.
-- Add user create {USER} {PASS}
-- Add user login {USER} {PASS}
-- Add user promote
-- Add user promote {USER}
-
-[Coming Soon]
-
-- Add note write command. Return ID
-- Add note read {ID} command.
-- Add note read all command.
-- Add note erase {ID} command.
-- Add note erase all command.
-- Add upload command.
-
 [Future Features]
 
 - Develop theme 'GUI'.
