@@ -29,35 +29,7 @@ class TextAdapter {
 
 let text_adapter = new TextAdapter()
 
-class User {
-    name = "name"
-    minimum = 0
-
-    constructor(name, minimum) {
-        this.name = name
-        this.minimum = minimum
-    }
-
-    validate(min) {
-        return this.minimum >= min.minimum
-    }
-}
-
-const UserList = {
-    guest: new User("guest", 0),
-    user: new User("user", 1),
-    root: new User("root", 5)
-}
-
-var user = UserList.guest
-
 class Command {
-    name = "command"
-    alias = ["cmd"]
-    permission = UserList.guest;
-    description = "A command executes a series of logic."
-    event = () => {}
-
     constructor(name, alias, permission, description, event) {
         this.name = name
         this.alias = alias
@@ -79,9 +51,6 @@ class Command {
         // Verifying a valid name or alias has been found
         if (command !== this.name && !found) return false
 
-        // Check for sufficient permission
-        if (!user.validate(this.permission)) return text_adapter.send("You do not have sufficient permission to use this command.").then(false)
-
         this.event(args)
 		
 		if (this.name == "clear") {
@@ -94,14 +63,14 @@ class Command {
 }
 
 const CommandList = {
-    help: new Command("help", ["hlp", "?"], UserList.guest, "Get a list of all qualified commands.",                event_help),
-    whois: new Command("whois", ["me", "whoami", "about", "author"], UserList.guest, "A small segment about me.",   event_whois),
-    theme: new Command("theme", ["change"], UserList.guest, "Change the theme to gui.",                             event_theme),
-    scale: new Command("scale", ["zoom"], UserList.guest, "Change the scale of the terminal.",                      event_scale),
-    download: new Command("download", ["dl"], UserList.guest, "Download a file from the website.",                  event_download),
-    clear: new Command("clear", ["clr", "cls"], UserList.guest, "Clears the screen.",                               event_clear),
-    resume: new Command("resume", ["cv", "recruit"], UserList.guest, "Downloads my latest resume and CV.",          event_resume),
-    github: new Command("github", ["git", "source"], UserList.guest, "Use 'github ?' for more information.",        event_github)
+    help: new Command("help",           ["h", "hlp", "?"], UserList.guest, "Get a list of all qualified commands.",                 event_help),
+    whois: new Command("whois",         ["w", "me", "whoami", "about", "author"], UserList.guest, "A small segment about me.",      event_whois),
+    theme: new Command("theme",         ["t", "change"], UserList.guest, "Change the theme to gui.",                                event_theme),
+    scale: new Command("scale",         ["s", "zoom"], UserList.guest, "Change the scale of the terminal.",                         event_scale),
+    download: new Command("download",   ["d", "dl"], UserList.guest, "Download a file from the website.",                           event_download),
+    clear: new Command("clear",         ["c", "clr", "cls"], UserList.guest, "Clears the screen.",                                  event_clear),
+    resume: new Command("resume",       ["r", "cv", "recruit"], UserList.guest, "Downloads my latest resume and CV.",               event_resume),
+    github: new Command("github",       ["g", "git", "source"], UserList.guest, "Use 'github ?' for more information.",             event_github),
 }
 
 function event_help(args) {
@@ -137,9 +106,9 @@ function event_scale(args) {
     text_adapter.send(`The scale of the emulator has been set to ${n}.`)
 }
 function event_download(args) {
-    const argOne = validate_args(text_adapter, args, ["0"])[0];
+    if (args.length < 1) return;
     
-    return text_adapter.send(`Downloading file: ${argOne}.`).then(download_file_silently(`assets/${argOne}`))
+    return text_adapter.send(`Downloading file: ${args[0]}.`).then(download_file_silently(`assets/${args[0]}`))
 }
 function event_clear() {
     document.querySelectorAll('.packed').forEach(pack => pack.remove());
@@ -153,9 +122,7 @@ function event_resume() {
 function event_github(args) {
     if (args.length < 1) return text_adapter.send("Opening my github profile...").then(navigate_link("https://github.com/csweat03/"))
 
-    const argOne = validate_args(text_adapter, args, [""])[0];
-
-    if (argOne == "?") {
+    if (args[0] == "?") {
         var str = ""
         for (var index in repositories) {
             repo = repositories[index]
@@ -166,7 +133,7 @@ function event_github(args) {
 
     for (var index in repositories) {
         repo = repositories[index]
-        if (argOne.toLowerCase() == repo.toLowerCase()) {
+        if (args[0].toLowerCase() == repo.toLowerCase()) {
             navigate_link("https://github.com/csweat03/" + repo)
             return
         }
