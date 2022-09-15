@@ -34,7 +34,7 @@ Contributions are always welcome!
 |--------|------|------|
 | Dan | [Click Here](https://stackoverflow.com/questions/175739/how-can-i-check-if-a-string-is-a-valid-number?page=1&tab=scoredesc#tab-top) | [utils.js:2](https://github.com/csweat03/Terminal-Website/blob/ceba2657dce67d07b30244b4f65a35ff168c384a/js/utils.js#L2)
 | nnnnnn | [Click Here](https://stackoverflow.com/questions/7171483/simple-way-to-get-element-by-id-within-a-div-tag) | [utils.js:9](https://github.com/csweat03/Terminal-Website/blob/ceba2657dce67d07b30244b4f65a35ff168c384a/js/utils.js#L9)
-| nnnnnn | [Click Here](https://stackoverflow.com/questions/1066452/easiest-way-to-open-a-download-window-without-navigating-away-from-the-page) | [utils.js:16](https://github.com/csweat03/Terminal-Website/blob/ceba2657dce67d07b30244b4f65a35ff168c384a/js/utils.js#L16)
+| 0x000f | [Click Here](https://stackoverflow.com/questions/1066452/easiest-way-to-open-a-download-window-without-navigating-away-from-the-page) | [utils.js:16](https://github.com/csweat03/Terminal-Website/blob/ceba2657dce67d07b30244b4f65a35ff168c384a/js/utils.js#L16)
 
 ## Feedback
 
