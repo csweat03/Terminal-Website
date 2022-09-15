@@ -1,6 +1,7 @@
 # Terminal Website
 
-A fun website made to emulate a Linux/Bash Terminal. The project is still actively in development. 
+A static website to emulate a Linux/Bash Terminal. The project is still actively in development. Planning on  
+rewrite using Node.JS
 
 This project is hosted through GitHub Pages at https://csweat03.github.io/Terminal-Website/.
 
@@ -21,35 +22,6 @@ Contributions are always welcome!
 
 
 ## Roadmap
-
-[In Progress]
-
-- Clean up existing code
-- Add download {file} command
-- Add resume shorthand.
-- Add cv shorthand.
-- Add github command.
-- Add github {X} command.
-
-[Starting Soon]
-
-- Implement elevation system.
-- Add user ? command.
-- Add user create command.
-- Add user login command.
-- Add user create {USER} {PASS}
-- Add user login {USER} {PASS}
-- Add user promote
-- Add user promote {USER}
-
-[Coming Soon]
-
-- Add note write command. Return ID
-- Add note read {ID} command.
-- Add note read all command.
-- Add note erase {ID} command.
-- Add note erase all command.
-- Add upload command.
 
 [Future Features]
 
