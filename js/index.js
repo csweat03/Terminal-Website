@@ -30,10 +30,9 @@ class TextAdapter {
 let text_adapter = new TextAdapter()
 
 class Command {
-    constructor(name, alias, permission, description, event) {
+    constructor(name, alias, description, event) {
         this.name = name
         this.alias = alias
-        this.permission = permission
         this.description = description
         this.event = event
     }
@@ -63,14 +62,14 @@ class Command {
 }
 
 const CommandList = {
-    help: new Command("help",           ["h", "hlp", "?"], UserList.guest, "Get a list of all qualified commands.",                 event_help),
-    whois: new Command("whois",         ["w", "me", "whoami", "about", "author"], UserList.guest, "A small segment about me.",      event_whois),
-    theme: new Command("theme",         ["t", "change"], UserList.guest, "Change the theme to gui.",                                event_theme),
-    scale: new Command("scale",         ["s", "zoom"], UserList.guest, "Change the scale of the terminal.",                         event_scale),
-    download: new Command("download",   ["d", "dl"], UserList.guest, "Download a file from the website.",                           event_download),
-    clear: new Command("clear",         ["c", "clr", "cls"], UserList.guest, "Clears the screen.",                                  event_clear),
-    resume: new Command("resume",       ["r", "cv", "recruit"], UserList.guest, "Downloads my latest resume and CV.",               event_resume),
-    github: new Command("github",       ["g", "git", "source"], UserList.guest, "Use 'github ?' for more information.",             event_github),
+    help: new Command("help",           ["h", "hlp", "?"], "Get a list of all qualified commands.",                 event_help),
+    whois: new Command("whois",         ["w", "whoami"], "A small segment about me.",                               event_whois),
+    theme: new Command("theme",         ["t", "change"], "Change the theme to gui.",                                event_theme),
+    scale: new Command("scale",         ["s", "zoom"], "Change the scale of the terminal.",                         event_scale),
+    download: new Command("download",   ["d", "dl"], "Download a file from the website.",                           event_download),
+    clear: new Command("clear",         ["c", "clr", "cls"], "Clears the screen.",                                  event_clear),
+    resume: new Command("resume",       ["r", "cv", "recruit"], "Downloads my latest resume and CV.",               event_resume),
+    github: new Command("github",       ["g", "git", "source"], "Use 'github ?' for more information.",             event_github),
 }
 
 function event_help(args) {
