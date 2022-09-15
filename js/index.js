@@ -1,10 +1,6 @@
-var root = "csweat03.com"
-
 let primary_color = "rgb(0, 146, 19)"
 let second_color = "rgb(186, 245, 194)"
 let third_color = "rgb(245, 245, 245)"
-
-var hist = []
 
 var input_element
 
@@ -147,11 +143,10 @@ function present_interface() {
     selectors[2].style.color = primary_color
     selectors[3].style.color = third_color
 
-    selectors[0].textContent = user.name
-    selectors[2].textContent = root
+    selectors[0].textContent = "guest"
+    selectors[2].textContent = "csweat03.com"
 
     input_element = get_element_constrain_container("current", "input")
-    hist[hist.length] = input_element.value
 }
 
 function process_interface() {
@@ -192,7 +187,7 @@ function pack_div() {
 
 setTimeout(present_interface, 1)
 
-document.addEventListener('mouseup', (event) => {
+document.addEventListener('mouseup', () => {
     get_element_constrain_container("current", "input").focus()
 })
 
