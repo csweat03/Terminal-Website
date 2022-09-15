@@ -129,8 +129,7 @@ function event_github(args) {
     for (var index in repositories) {
         repo = repositories[index]
         if (args[0].toLowerCase() == repo.toLowerCase()) {
-            navigate_link("https://github.com/csweat03/" + repo)
-            return
+            return navigate_link("https://github.com/csweat03/" + repo)
         }
     }
 }
