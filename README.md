@@ -25,6 +25,7 @@ Contributions are always welcome!
 
 [Future Features]
 
+- Fix slide animation when 'Enter' is pressed.
 - Develop theme 'GUI'.
 - Fix 'scale' command.
 
